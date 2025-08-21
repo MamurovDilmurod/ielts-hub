@@ -48,7 +48,7 @@ export const Navbar = () => {
                 type="text"
                 icon={<MenuOutlined />}
                 onClick={showDrawer}
-                className="text-xl md:hidden"
+                className="text-xl md:!hidden"
             />
 
             {/* Drawer for Mobile */}

@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input, Button, Tooltip, Modal, Form } from "antd";
+import { Table, Input, Button, Tooltip, Modal, Form, TableProps } from "antd";
 import { EditTwoTone, DeleteTwoTone, PlusOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
-
+interface DataType {
+  key: string;
+  title: string;
+  width: string;
+  align: "center" | "left" | "right";
+  render?: (text: string, record: any, index: number) => React.ReactNode;
+  dataIndex?: string;
+}
 const Vocabulary = () => {
   const [data, setData] = useState<
     { key: string; english: string; uzbek: string }[]
@@ -80,50 +87,6 @@ const Vocabulary = () => {
     setIsAddModalOpen(false); // ✅ Modal yopiladi
   };
 
-  const columns = [
-    {
-      title: "№",
-      key: "index",
-      render: (_: any, __: any, index: number) => <span>{index + 1}</span>,
-      width: 50,
-    },
-    {
-      title: "English",
-      dataIndex: "english",
-      key: "english",
-      render: (text: string) => (
-        <span className="font-semibold text-blue-600">{text}</span>
-      ),
-    },
-    {
-      title: "O‘zbekcha",
-      dataIndex: "uzbek",
-      key: "uzbek",
-      render: (text: string) => <span className="text-green-600">{text}</span>,
-    },
-    {
-      title: "Amallar",
-      key: "actions",
-      render: (_: any, record: any) => (
-        <div className="flex items-center gap-5">
-          <Tooltip title="Tahrirlash">
-            <Button
-              icon={<EditTwoTone twoToneColor="#1890ff" />}
-              onClick={() => editWord(record)}
-            />
-          </Tooltip>
-          <Tooltip title="O‘chirish">
-            <Button
-              shape="circle"
-              icon={<DeleteTwoTone twoToneColor="#ff4d4f" />}
-              onClick={() => deleteWord(record.key)}
-            />
-          </Tooltip>
-        </div>
-      ),
-    },
-  ];
-
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-4">
@@ -139,7 +102,55 @@ const Vocabulary = () => {
 
       <Table
         rowKey="key"
-        columns={columns}
+        columns={[
+          {
+            title: "№",
+            key: "index",
+            render: (_: any, __: any, index: number) => (
+              <span>{index + 1}</span>
+            ),
+            width: 50,
+          },
+          {
+            title: "English",
+            dataIndex: "english",
+            key: "english",
+            render: (text: string) => (
+              <span className="font-semibold text-blue-600">{text}</span>
+            ),
+          },
+          {
+            title: "O‘zbekcha",
+            dataIndex: "uzbek",
+            key: "uzbek",
+            render: (text: string) => (
+              <span className="text-green-600">{text}</span>
+            ),
+          },
+          {
+            align: "center",
+            width: "0",
+            title: "Amallar",
+            key: "actions",
+            render: (_: any, record: any) => (
+              <div className="flex items-center gap-5">
+                <Tooltip title="Tahrirlash">
+                  <Button
+                    icon={<EditTwoTone twoToneColor="#1890ff" />}
+                    onClick={() => editWord(record)}
+                  />
+                </Tooltip>
+                <Tooltip title="O‘chirish">
+                  <Button
+                    shape="circle"
+                    icon={<DeleteTwoTone twoToneColor="#ff4d4f" />}
+                    onClick={() => deleteWord(record.key)}
+                  />
+                </Tooltip>
+              </div>
+            ),
+          },
+        ]}
         dataSource={data}
         bordered
         pagination={{ pageSize: 10 }}
