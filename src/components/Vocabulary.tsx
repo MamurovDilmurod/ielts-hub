@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input, Button, Tooltip, Modal, Form, TableProps } from "antd";
+import {
+  Table,
+  Input,
+  Button,
+  Tooltip,
+  Modal,
+  Form,
+  TableProps,
+  message,
+} from "antd";
 import { EditTwoTone, DeleteTwoTone, PlusOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
 
 const { TextArea } = Input;
 interface DataType {
@@ -70,7 +80,7 @@ const Vocabulary = () => {
     const lines = bulkText.split("\n");
     const newWords = lines
       .map((line) => {
-        const [english, uzbek] = line.split("-").map((w) => w?.trim());
+        const [english, uzbek] = line.split(/\s*[-–]\s*/).map((w) => w?.trim());
         if (english && uzbek) {
           return {
             key: Date.now().toString() + Math.random(),
@@ -82,9 +92,14 @@ const Vocabulary = () => {
       })
       .filter(Boolean) as { key: string; english: string; uzbek: string }[];
 
+    if (newWords.length === 0) {
+      toast.error("Hech bir to‘g‘ri formatdagi so‘z topilmadi!");
+      return;
+    }
+
     setData((prev) => [...prev, ...newWords]);
     setBulkText("");
-    setIsAddModalOpen(false); // ✅ Modal yopiladi
+    setIsAddModalOpen(false);
   };
 
   return (

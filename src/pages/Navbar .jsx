@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MenuOutlined } from "@ant-design/icons";
 import { Drawer, Button } from "antd";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export const Navbar = () => {
     const [open, setOpen] = useState(false);
@@ -17,7 +17,9 @@ export const Navbar = () => {
     return (
         <nav className="flex items-center justify-between w-full px-6 py-3 bg-white shadow-md">
             {/* Logo */}
-            <div className="text-2xl font-bold text-blue-600">IELTS Hub</div>
+            <div className="text-2xl font-bold text-blue-600 cursor-pointer">
+                <Link to={'/'} className="flex items-center cursor-pointer">IELTS Hub</Link>
+            </div>
 
             {/* Desktop Links */}
             <ul className="hidden gap-6 font-medium md:flex">
