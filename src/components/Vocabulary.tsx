@@ -103,7 +103,7 @@ const Vocabulary = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-0 md:p-6">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold">Vocabulary</h2>
         <Button
@@ -124,7 +124,7 @@ const Vocabulary = () => {
             render: (_: any, __: any, index: number) => (
               <span>{index + 1}</span>
             ),
-            width: 50,
+            // width: 50,
           },
           {
             title: "English",
